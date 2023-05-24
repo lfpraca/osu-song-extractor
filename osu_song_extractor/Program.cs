@@ -90,7 +90,6 @@ namespace osu__song_extractor
                 '8',
                 '9',
                 '0',
-                ' ',
             };
             #endregion
 
@@ -154,7 +153,8 @@ namespace osu__song_extractor
                     continue;
                 }
                 Console.Write("Copying...");
-                System.IO.File.Copy(item.path, System.IO.Path.Combine(Settings1.Default.targetPath, item.folder.TrimStart(numbers) + ".mp3"), true);
+                item.folder = item.folder.TrimStart(numbers);
+                System.IO.File.Copy(item.path, System.IO.Path.Combine(Settings1.Default.targetPath, item.folder.TrimStart(' ') + ".mp3"), true);
                 songs++;
                 Console.WriteLine("Done");
             }
