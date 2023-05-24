@@ -1,0 +1,23 @@
+#+title: Readme
+#+author: LFPraca
+
+* Contexto
+
+Programa escrito originalmente em maio de 2021 utilizando C# e .NET Core 3.1, para uso pessoal e de quam mais pudesse ser de interesse.
+
+* Funcionalidade
+
+O programa é um programa de linha de comando interativo que consegue salvar informações em um arquivo config para uso em próximas seções.
+O propósito dele é copiar os arquivos de música da pasta do jogo osu! no computador para outra pasta qualquer a critério do usuário.
+
+Foi também feito uma implantação rudimentar de suporte a múltiplas línguas utilizando arrays de frases nas duas línguas, com frases equivalentes sendo colocadas na mesma posição do array.
+
+* Aprendizados e o que faria diferente hoje
+
+Ao invés de arrays, seria melhor terem sido utilizadas listas de frases com chaves descritivas, facilitando o entendimento do código e manutenção futura. Além disso, para frases quebradas (ex. "Arquivo "{x}" de "{y}), seria melhor utilizar placeholders para os valores fixos, que seriam então substituídos usando string.Format(), isso também permitiria melhor adaptar a ordens de elementos diferentes na frase dependendo da língua selecionada.
+
+Para valores fixos, no código, que não são alterados no runtime, a declaração poderia ser feita utilizando constantes.
+
+O uso de void para mudar variáveis externas poderia ser alterado para para retornar o valor para a variável no local onde a função foi chamada.
+
+Para melhorar o "readability" e organização do código, diferentes partes do programa poderiam ser divididos em diferentes arquivos com propósitos específicos (ex. definir constantes para frases que serão mostradas ao usuário, validar respostas).
