@@ -167,6 +167,8 @@ namespace osu__song_extractor
             {
                 Console.WriteLine("New osu! songs folder path: ");
                 string response1 = Console.ReadLine();
+                if (System.IO.Path.GetFileName(response1) == "osu!")
+                    response1 = System.IO.Path.Combine(response1, "Songs");
                 if (response1 != "")
                     Settings1.Default.sourcePath = response1;
                 Console.WriteLine("New destination folder path: ");
