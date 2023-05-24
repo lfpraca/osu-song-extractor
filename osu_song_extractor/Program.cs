@@ -155,7 +155,6 @@ namespace osu__song_extractor
                 }
                 Console.Write("Copying...");
                 System.IO.File.Copy(item.path, System.IO.Path.Combine(Settings1.Default.targetPath, item.folder.TrimStart(numbers) + ".mp3"), true);
-                //System.IO.File.Copy(item.path, System.IO.Path.Combine(Settings1.Default.targetPath, System.IO.Path.GetFileNameWithoutExtension(item.path) + ".mp3"), true);
                 songs++;
                 Console.WriteLine("Done");
             }
