@@ -46,5 +46,17 @@ namespace osu__song_extractor {
                 this["targetPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int lang {
+            get {
+                return ((int)(this["lang"]));
+            }
+            set {
+                this["lang"] = value;
+            }
+        }
     }
 }

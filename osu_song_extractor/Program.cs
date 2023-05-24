@@ -91,29 +91,78 @@ namespace osu__song_extractor
                 '9',
                 '0',
             };
+            int[] lang =
+            {
+                0,
+                1,
+            };
+            string[] en_us =
+            {
+                "Reading config file...",
+                "Failed",
+                "Done",
+                "Current osu! songs folder path: ",
+                "Current destination songs folder path: ",
+                "Modify config file?(y/N)",
+                "Discovering files...",
+                "File ",
+                " of ",
+                "Discarded",
+                "Copying...",
+                "Finished copying ",
+                " songs. Thank you for using this program!",
+                "New osu! songs folder path: ",
+                "New destination folder path: ",
+                "Settings saved",
+                "Select language:",
+            };
+            string[] pt_br =
+            {
+                "Lendo arquivo config...",
+                "Falha",
+                "Pronto",
+                "Caminho atual para pasta de músicas do osu!: ",
+                "Caminho atual para pasta de destino: ",
+                "Modificar arquivo config?(y/N)",
+                "Descobrindo arquivos...",
+                "Arquivo ",
+                " de ",
+                "Descartado",
+                "Copiando...",
+                "Foram copiadas ",
+                " músicas. Obrigado por usar este programa!",
+                "Novo caminho para pasta de músicas do osu!: ",
+                "Novo caminho para pasta de destino: ",
+                "Configurações salvas",
+                "Selecione idioma:",
+            };
             #endregion
 
-            Console.Write("Reading config file...");
+            string[] text = { };
+
+            loadLang();
+
+            Console.Write(text[0]);
             if (Settings1.Default.sourcePath == "" || Settings1.Default.targetPath == "")
             {
-                Console.WriteLine("Failed");
+                Console.WriteLine(text[1]);
                 Console.WriteLine();
                 modConfig();
             }
             else
             {
-                Console.WriteLine("Done");
+                Console.WriteLine(text[2]);
                 Console.WriteLine();
-                Console.WriteLine("Current osu! songs folder path: " + Settings1.Default.sourcePath);
-                Console.WriteLine("Current destination songs folder path: " + Settings1.Default.targetPath);
-                Console.WriteLine("Modify config file?(y/N)");
+                Console.WriteLine(text[3] + Settings1.Default.sourcePath);
+                Console.WriteLine(text[4] + Settings1.Default.targetPath);
+                Console.WriteLine(text[5]);
                 string response1 = Console.ReadLine();
                 if (response1 == "y" || response1 == "Y")
                     modConfig();
             }
             Console.Clear();
 
-            Console.Write("Discovering files...");
+            Console.Write(text[6]);
             string[] folders = System.IO.Directory.GetDirectories(Settings1.Default.sourcePath);
             int total = 0;
             fileList fileList = new fileList();
@@ -133,60 +182,104 @@ namespace osu__song_extractor
                     fileList.Add(file);
                 }
             }
-            Console.WriteLine("Done");
+            Console.WriteLine(text[2]);
             System.Threading.Thread.Sleep(450);
             Console.Clear();
 
             int songs = 0;
             foreach (var item in fileList)
             {
-                Console.Write("File " + item.count + " of " + total + "...");
+                Console.Write(text[7] + item.count + text[8] + total + "...");
 
                 if (System.IO.Path.GetExtension(item.path) != ".mp3")
                 {
-                    Console.WriteLine("Discarded");
+                    Console.WriteLine(text[9]);
                     continue;
                 }
                 if (!validate(System.IO.Path.GetFileNameWithoutExtension(item.path)))
                 {
-                    Console.WriteLine("Discarded");
+                    Console.WriteLine(text[9]);
                     continue;
                 }
-                Console.Write("Copying...");
+                Console.Write(text[10]);
                 item.folder = item.folder.TrimStart(numbers);
                 System.IO.File.Copy(item.path, System.IO.Path.Combine(Settings1.Default.targetPath, item.folder.TrimStart(' ') + ".mp3"), true);
                 songs++;
-                Console.WriteLine("Done");
+                Console.WriteLine(text[2]);
             }
 
             Console.WriteLine("\n\n");
-            Console.WriteLine("Finished copying " + songs + " songs. Thank you for using this program!");
+            Console.WriteLine(text[11] + songs + text[12]);
             Console.ReadLine();
 
             void modConfig()
             {
-                Console.WriteLine("New osu! songs folder path: ");
+                Console.WriteLine(text[16]);
+                Console.WriteLine("0: EN(US)");
+                Console.WriteLine("1: PT(BR)");
+                string response0 = Console.ReadLine();
+                if (validateLang(response0))
+                {
+                    switch (response0)
+                    {
+                        case "0":
+                            Settings1.Default.lang = 0;
+                            break;
+                        case "1":
+                            Settings1.Default.lang = 1;
+                            break;
+                        default:
+                            Settings1.Default.lang = 0;
+                            break;
+                    }
+                    loadLang();
+                }
+                Console.WriteLine(text[13]);
                 string response1 = Console.ReadLine();
                 if (System.IO.Path.GetFileName(response1) == "osu!")
                     response1 = System.IO.Path.Combine(response1, "Songs");
                 if (response1 != "")
                     Settings1.Default.sourcePath = response1;
-                Console.WriteLine("New destination folder path: ");
+                Console.WriteLine(text[14]);
                 string response2 = Console.ReadLine();
                 if (response2 != "")
                     Settings1.Default.targetPath = response2;
                 Settings1.Default.Save();
-                Console.WriteLine("Settings Saved");
+                Console.WriteLine(text[15]);
                 System.Threading.Thread.Sleep(450);
+            }
+            void loadLang()
+            {
+                switch (Settings1.Default.lang)
+                {
+                    case 0:
+                        text = en_us;
+                        break;
+                    case 1:
+                        text = pt_br;
+                        break;
+                    default:
+                        text = en_us;
+                        break;
+                }
             }
             bool validate(string item)
             {
-                for (int i = 0; i < blacklist.Length - 1; i++)
+                for (int i = 0; i < blacklist.Length; i++)
                 {
                     if (string.Equals(item, blacklist[i], StringComparison.OrdinalIgnoreCase))
                         return false;
                 }
                 return true;
+            }
+            bool validateLang(string response)
+            {
+                for (int i = 0; i < lang.Length; i++)
+                {
+                    if (string.Equals(response, lang[i].ToString(), StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+                return false;
             }
         }
     }
