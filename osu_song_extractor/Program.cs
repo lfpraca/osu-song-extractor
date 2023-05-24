@@ -188,26 +188,6 @@ namespace osu__song_extractor
                 return true;
             }
         }
-
-        #region Experimental
-        //void load()
-        //{
-        //    if (!firsttime)
-        //        System.Threading.Thread.Sleep(100);
-        //    Console.WriteLine("|");
-        //    firsttime = false;
-        //    Console.SetCursorPosition(0, 2);
-        //    System.Threading.Thread.Sleep(100);
-        //    Console.WriteLine("/");
-        //    Console.SetCursorPosition(0, 2);
-        //    System.Threading.Thread.Sleep(100);
-        //    Console.WriteLine("-");
-        //    Console.SetCursorPosition(0, 2);
-        //    System.Threading.Thread.Sleep(100);
-        //    Console.WriteLine(@"\");
-        //    Console.SetCursorPosition(0, 2);
-        //}
-        #endregion
     }
     public class fileList : List<file> { }
     public class file
